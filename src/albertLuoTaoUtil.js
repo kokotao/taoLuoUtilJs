@@ -72,44 +72,8 @@ export const getValuesFromJson = function (keyValuePairs) {
     var values = {};
 
     $.each(keyValuePairs, function (key, name) {
-        var value = "";
-
-        // 检查带有ng-model属性的元素是否存在
-        var ngModelElement = $('[ng-model="' + name + '"]');
-        if (ngModelElement.length > 0) {
-            // 检查它是否是输入字段
-            if (ngModelElement.is('input, textarea, select')) {
-                value = ngModelElement.val();
-            } else {
-                value = ngModelElement.text();
-            }
-        }
-
-        // 如果ng-model没有值，检查通过id获取
-        if (!value) {
-            var idElement = $('#' + name);
-            if (idElement.length > 0) {
-                // 检查它是否是输入字段
-                if (idElement.is('input, textarea, select')) {
-                    value = idElement.val();
-                } else {
-                    value = idElement.text();
-                }
-            }
-        }
-
-        // 如果id也没有值，通过class获取
-        if (!value) {
-            var classElement = $('.' + name);
-            if (classElement.length > 0) {
-                // 检查它是否是输入字段
-                if (classElement.is('input, textarea, select')) {
-                    value = classElement.val();
-                } else {
-                    value = classElement.text();
-                }
-            }
-        }
+       //单个值获取
+     var value= getSingleValue(name);
 
         // 将键值对添加到结果对象
         values[key] = value;
