@@ -9,7 +9,9 @@ import {
     isUndefined, mergeObject,
     pick,
     setAttr,
-    trigger, getAnyNameValue, getValuesFromJson, setValuesFromJson, saveStuData,setTableValuesFromJson,getElementsFromTable,getTableValuesFromJson,setSingleValueByAttrName,getSingleValue,doCheckRealCard
+    trigger, getAnyNameValue, getValuesFromJson, setValuesFromJson, saveStuData,setTableValuesFromJson,getElementsFromTable,getTableValuesFromJson,setSingleValueByAttrName,getSingleValue,doCheckRealCard,
+    objectLength,
+    setValuesByTableId
 } from "./albertLuoTaoUtil";
 /**
  * @description TODO 这是一系列自集成js方法，在对Dom元素 id class name等赋值取值时总要用jquery js 等指定的$ # . getElementID等特殊符号好生繁琐，
@@ -43,5 +45,7 @@ window.taoLuoUtil = {
     getTableValuesFromJson,
     setSingleValueByAttrName,
     getSingleValue,
-    doCheckRealCard
+    doCheckRealCard,
+    objectLength,
+    setValuesByTableId
 };
