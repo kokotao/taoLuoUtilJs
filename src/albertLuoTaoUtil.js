@@ -467,8 +467,45 @@ export const saveStuData = function (answerValues) {
     });
 
 }
+/**
+ *@Return:{string}
+ * @description TODO 根据tableId获取元素id 或者class名，由strArrkey取objectValues的值赋值给elemId元素
+ * @param {Array}strArr 需要赋值顺序数组key
+ * @param {string}tableId 表格id
+ * @param {string}elemId 元素id 或者class名
+ * @param {Object}objectValues key value 由strArrkey取值赋值给elemId
+ * @author LTao
+ * @date 2024/2/29 14:36
+ * @example:
+ * var strArr = ['房产原值', '出租房产原值', '出租房产面积', '计税比例', '纳税义务有效期起', '纳税义务有效期止'];
+ * var objectValues={
+ *     '房产原值':'2000',
+ *     '出租房产原值':'1200',
+ *     '出租房产面积':'100',
+ *     '计税比例':'0.7',
+ *     '纳税义务有效期起','2024-02-29',
+ *     '纳税义务有效期止','2024-12-31'
+ * }
+ * setValuesByTableId(strArr,"adValoremRow","id",objectValues)
+ */
+export const setValuesByTableId = function (strArr,tableId,elemId,objectValues) {
+    if (strArr.length===0||isUndefined(tableId)||isUndefined(elemId)){
+        return "参数需要有值"
+    }
+    if (Object.values(objectValues).length !== 0) {
+        var dataInfo = {};
+        var tableArr = getElementsFromTable(tableId, elemId);
+        for (var i = 0; i < tableArr.length; i++) {
+            dataInfo[tableArr[i]] = objectValues[strArr[i]];
+        }
+        setValuesFromJson(dataInfo);
+        return dataInfo
+    }else{
+        return "第四个参数值不能为空"
+    }
+}
 
-//TODO------------------------------------------------------- 零碎DOM操作-------------------------------------------------------
+//TODO ------------------------------------------------------- 零碎DOM操作-------------------------------------------------------
 /**
  * 设置元素属性
  * @param {Object}} attrs
@@ -549,7 +586,7 @@ export const isNumber = function (value) {
  * @description: 获取数据类型
  * @param {*} value : 传入的值
  */
-export const getType = function getType(value) {
+export const getType = function (value) {
     return Object.prototype.toString.call(value).slice(8, -1).toLowerCase()
 }
 /**
@@ -571,6 +608,9 @@ export const isUndefined = function (value) {
     return typeof value === 'undefined'
 }
 
+export const objectLength = function (val){
+    return Object.values(val).length;
+}
 
 export const baseMerge = function (f, s) {
     for (var i in s) {
