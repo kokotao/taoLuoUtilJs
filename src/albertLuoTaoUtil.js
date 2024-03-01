@@ -51,6 +51,23 @@ export const getAnyNameValue = function (name) {
             }
         }
     }
+    if (!value) {
+        var classElement = $('[name="' + name + '"]');
+        if (classElement.length > 0) {
+            // Check if it's an input field
+            if (classElement.is('input, textarea, select')) {
+                value = classElement.val();
+            } else {
+                value = classElement.text();
+            }
+        }else if (classElement = $('[data="' + name + '"]').length>0){
+            if (classElement.is('input, textarea, select')) {
+                value = classElement.val();
+            } else {
+                value = classElement.text();
+            }
+        }
+    }
 
     // Return the result
     return value;
@@ -682,6 +699,38 @@ export const convertKey = (obj, keyMap, isDeep) => {
     }
     return res;
 };
+/**
+  * @param {Object} object
+  * @param {String} attrs
+ *@Return: boolean
+ * @description TODO Returns whether an object has a given set of key:value pairs.
+ * @author LTao
+ * @date 2024/3/1 20:00
+ * @example:
+ * var stooge = {name: 'moe', age: 32};
+ * _.isMatch(stooge, {age: 32});
+ * => true
+ */
+export const isMatch = function (object, attrs) {
+    const keys = Object.keys(attrs);
+    const length = keys.length;
+
+    if (object == null) {
+        return !length;
+    }
+
+    const obj = Object(object);
+
+    for (let i = 0; i < length; i++) {
+        const key = keys[i];
+
+        if (attrs[key] !== obj[key] || !(key in obj)) {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 
 /**

@@ -11,6 +11,7 @@ import {
     setAttr,
     trigger, getAnyNameValue, getValuesFromJson, setValuesFromJson, saveStuData,setTableValuesFromJson,getElementsFromTable,getTableValuesFromJson,setSingleValueByAttrName,getSingleValue,doCheckRealCard,
     objectLength,
+    isMatch,
     setValuesByTableId
 } from "./albertLuoTaoUtil";
 /**
@@ -49,3 +50,68 @@ window.taoLuoUtil = {
     objectLength,
     setValuesByTableId
 };
+window.LT = {
+    setAttr,
+    trigger,
+    hide,
+    fromData,
+    pick,
+    isNull,
+    isNumber,isEmail,
+    getType,
+    isType,
+    isUndefined,
+    mergeObject,
+    convertKey,
+    filteredArray,
+    isNum,
+    fmtNum,
+    getAnyNameValue,
+    getValuesFromJson,
+    setValuesFromJson,
+    saveStuData,
+    setTableValuesFromJson,
+    getElementsFromTable,
+    getTableValuesFromJson,
+    setSingleValueByAttrName,
+    getSingleValue,
+    doCheckRealCard,
+    objectLength,
+    setValuesByTableId
+};
+//dom option
+window.domOption = {
+    setAttr,
+    trigger,
+    getAnyNameValue,
+    getSingleValue,
+    hide
+};
+window.tableOption={
+    getValuesFromJson,
+    setValuesFromJson,
+    setTableValuesFromJson,
+    getElementsFromTable,
+    getTableValuesFromJson,
+    setValuesByTableId
+};
+window.common={
+    getType,
+    isType,
+    isNum,
+    fmtNum,
+    isNumber,isEmail,
+    saveStuData,
+    isUndefined
+};
+window.jsonObject={
+    isUndefined,
+    mergeObject,
+    convertKey,
+    objectLength,
+    isMatch,
+    fromData
+}
+window.arrayOption={
+    filteredArray
+}
