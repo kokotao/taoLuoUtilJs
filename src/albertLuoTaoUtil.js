@@ -240,42 +240,47 @@ export const getTableValuesFromJson = function (keyValuePairs, V) {
  *                 };
  */
 export const setValuesFromJson = function (values) {
-    $.each(values, function (name, value) {
-        // Check if the element with ng-model exists
-        var ngModelElement = $('[ng-model="' + name + '"]');
-        if (ngModelElement.length > 0) {
-            // Check if it's an input field
-            if (ngModelElement.is('input, textarea, select')) {
-                ngModelElement.val(value);
-            } else {
-                ngModelElement.text(value);
+    try{
+        $.each(values, function (name, value) {
+            // Check if the element with ng-model exists
+            var ngModelElement = $('[ng-model="' + name + '"]');
+            if (ngModelElement.length > 0) {
+                // Check if it's an input field
+                if (ngModelElement.is('input, textarea, select')) {
+                    ngModelElement.val(value);
+                } else {
+                    ngModelElement.text(value);
+                }
+                return; // Move to the next key-value pair
             }
-            return; // Move to the next key-value pair
-        }
 
-        // If ng-model did not have a value, check by id
-        var idElement = $('#' + name);
-        if (idElement.length > 0) {
-            // Check if it's an input field
-            if (idElement.is('input, textarea, select')) {
-                idElement.val(value);
-            } else {
-                idElement.text(value);
+            // If ng-model did not have a value, check by id
+            var idElement = $('#' + name);
+            if (idElement.length > 0) {
+                // Check if it's an input field
+                if (idElement.is('input, textarea, select')) {
+                    idElement.val(value);
+                } else {
+                    idElement.text(value);
+                }
+                return; // Move to the next key-value pair
             }
-            return; // Move to the next key-value pair
-        }
 
-        // If id also did not have a value, check by class
-        var classElement = $('.' + name);
-        if (classElement.length > 0) {
-            // Check if it's an input field
-            if (classElement.is('input, textarea, select')) {
-                classElement.val(value);
-            } else {
-                classElement.text(value);
+            // If id also did not have a value, check by class
+            var classElement = $('.' + name);
+            if (classElement.length > 0) {
+                // Check if it's an input field
+                if (classElement.is('input, textarea, select')) {
+                    classElement.val(value);
+                } else {
+                    classElement.text(value);
+                }
             }
-        }
-    });
+        });
+    }catch (e){
+        
+    }
+    
 }
 
 /**
@@ -506,14 +511,28 @@ export const saveStuData = function (answerValues) {
  * setValuesByTableId(strArr,"adValoremRow","id",objectValues)
  */
 export const setValuesByTableId = function (strArr,tableId,elemId,objectValues) {
-    if (strArr.length===0||isUndefined(tableId)||isUndefined(elemId)){
+    if (isUndefined(tableId)||isUndefined(elemId)){
         return "参数需要有值"
     }
     if (Object.values(objectValues).length !== 0) {
         var dataInfo = {};
         var tableArr = getElementsFromTable(tableId, elemId);
-        for (var i = 0; i < tableArr.length; i++) {
-            dataInfo[tableArr[i]] = objectValues[strArr[i]];
+
+        if (strArr.length===0||isUndefined(strArr)){
+            console.log('No strArr');
+            // let index=0;
+            // for(var key in objectValues){
+            //     dataInfo[tableArr[index]] = objectValues[key];
+            //     index++;
+            // }
+            Object.keys(objectValues).forEach((key,index)=>{
+                dataInfo[tableArr[index]] = objectValues[key];
+            });
+        }else{
+            console.log('Yes strArr');
+            for (var i = 0; i < tableArr.length; i++) {
+                dataInfo[tableArr[i]] = objectValues[strArr[i]];
+            }
         }
         setValuesFromJson(dataInfo);
         return dataInfo
@@ -521,7 +540,127 @@ export const setValuesByTableId = function (strArr,tableId,elemId,objectValues) 
         return "第四个参数值不能为空"
     }
 }
+/**
+ * @param {Array}strArr 需要赋值顺序数组key
+ * @param {string}tableId 表格id
+ * @param {string}elemId 元素id 或者class名
+ * @param {Object}objectValues key value 由strArrkey取值赋值给elemId
+ * @description TODO 设置答案表格值与颜色
+ * @author LTao
+ * @date 2024/3/6 13:02
+ */
+export const setAnswerValuesByTableId = function (strArr,tableId,elemId,objectValues) {
+    if (isUndefined(tableId)||isUndefined(elemId)){
+        return "参数需要有值"
+    }
+    if (Object.values(objectValues).length !== 0) {
+        var dataInfo = {};
+        var tableArr = getElementsFromTable(tableId, elemId);
 
+        if (strArr.length===0||isUndefined(strArr)){
+            console.log('No strArr');
+            // let index=0;
+            // for(var key in objectValues){
+            //     dataInfo[tableArr[index]] = objectValues[key];
+            //     index++;
+            // }
+            Object.keys(objectValues).forEach((key,index)=>{
+                dataInfo[tableArr[index]] = objectValues[key];
+            });
+        }else{
+            console.log('Yes strArr');
+            for (var i = 0; i < tableArr.length; i++) {
+                dataInfo[tableArr[i]] = objectValues[strArr[i]];
+            }
+        }
+        setTableValuesAndColor(tableId,dataInfo);
+        return dataInfo
+    }else{
+        return "第四个参数值不能为空"
+    }
+}
+
+export const typeColor = function (tableId,infoData,attName){
+    var getAtt = $("#"+tableId).find("#" + attName + ", [name='" + attName + "'], [ng-model='" + attName + "'], ." + attName);
+    try {
+        if (infoData.includes('❀')){
+            // getAtt.val(infoData.split('❀')[0]);
+            if (getAtt.is('input, textarea, select')) {
+                getAtt.val(infoData.split('❀')[0]);
+            } else {
+                getAtt.text(infoData.split('❀')[0]);
+            }
+        }else{
+            if (getAtt.is('input, textarea, select')) {
+                getAtt.val(infoData);
+            } else {
+                getAtt.text(infoData);
+            }
+        }
+        if (infoData.split('❀')[1]=='2'){
+            getAtt.css({"background-color": 'red'});
+        }
+    }catch (e){
+        console.log(attName);
+    }
+}
+export const setAnyTypeValue=function (attName,value){
+    var getAtt = $("#" + attName + ", [name='" + attName + "'], [ng-model='" + attName + "'], ." + attName);
+    if (getAtt.length==0){
+        console.log('请检查，有误！getAtt的length=>'+getAtt.length);
+    }
+    try {
+        if (getAtt.is('input, textarea, select')) {
+            getAtt.val(value);
+        } else {
+            getAtt.text(value);
+        }
+        return 'true';
+    }catch (e){
+        console.log('请检查，有误！=>'+e);
+        return '请检查，有误！=>'+e;
+    }
+}
+/**
+  * @param {Object}values json对象格式
+ * @description TODO 设置答案表格值与颜色
+ * @author LTao
+ * @date 2024/3/6 13:02
+ */
+export const setTableValuesAndColor = function (tableId,values) {
+    try{
+        $.each(values, function (name, value) {
+            typeColor(tableId,value,name);
+        });
+    }catch (e){
+        return e;
+    }
+}
+/**
+  * @param {string}paraName 需要获取url中的参数key
+ *@Return: 参数值
+ * @description TODO 前端截取url获取对应参数key的值
+ * @author LTao
+ * @date 2024/3/2 14:14
+ */
+export const getUrlParam = function (paraName) {
+    var url = document.location.toString();
+    console.log(url);
+    var arrObj = url.split("?");
+    if (arrObj.length > 1) {
+        var arrPara = arrObj[1].split("&");
+        var arr;
+        for (var i = 0; i < arrPara.length; i++) {
+            arr = arrPara[i].split("=");
+            if (arr != null && arr[0] == paraName) {
+                return arr[1];
+            }
+        }
+        return "";
+    } else {
+        return "";
+    }
+}
 //TODO ------------------------------------------------------- 零碎DOM操作-------------------------------------------------------
 /**
  * 设置元素属性

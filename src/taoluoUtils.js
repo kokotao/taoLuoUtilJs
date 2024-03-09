@@ -12,7 +12,10 @@ import {
     trigger, getAnyNameValue, getValuesFromJson, setValuesFromJson, saveStuData,setTableValuesFromJson,getElementsFromTable,getTableValuesFromJson,setSingleValueByAttrName,getSingleValue,doCheckRealCard,
     objectLength,
     isMatch,
-    setValuesByTableId
+    setValuesByTableId,
+    setAnswerValuesByTableId,
+    typeColor,
+    setAnyTypeValue
 } from "./albertLuoTaoUtil";
 /**
  * @description TODO 这是一系列自集成js方法，在对Dom元素 id class name等赋值取值时总要用jquery js 等指定的$ # . getElementID等特殊符号好生繁琐，
@@ -77,7 +80,9 @@ window.LT = {
     getSingleValue,
     doCheckRealCard,
     objectLength,
-    setValuesByTableId
+    setValuesByTableId,
+    setAnswerValuesByTableId,
+    typeColor
 };
 //dom option
 window.domOption = {
@@ -93,7 +98,8 @@ window.tableOption={
     setTableValuesFromJson,
     getElementsFromTable,
     getTableValuesFromJson,
-    setValuesByTableId
+    setValuesByTableId,
+    setAnswerValuesByTableId
 };
 window.common={
     getType,
@@ -102,7 +108,8 @@ window.common={
     fmtNum,
     isNumber,isEmail,
     saveStuData,
-    isUndefined
+    isUndefined,
+    setAnyTypeValue
 };
 window.jsonObject={
     isUndefined,
