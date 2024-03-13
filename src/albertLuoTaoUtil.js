@@ -540,6 +540,42 @@ export const setValuesByTableId = function (strArr,tableId,elemId,objectValues) 
         return "第四个参数值不能为空"
     }
 }
+
+/**
+ * @description TODO 设置多行表格的值
+ * @param {String}str   拼接的html字符串用于增加表格行；此参数可以为"";
+ * @param {Array}strArr   表格ID；
+ * @param {String}tableId   属性元素ID；
+ * @param {String}attrType   例如 class名 name id等；
+ * @param {jsonObject}json   格式化的json；
+ * @author Albert_Luo
+ * @date 2024/3/12 23:17
+ * @example
+ *      strArr=['消费税税额','计税(费)率','本期应纳税(费)额','减免性质代码','减免税(费)额','减征比例','减征额','本期已缴税(费)额','本期应补(退)税(费)额']
+ *         $('#t5Table tr').each(function (i,v){
+ *             $.table.customTableAssignments("",strArr,'t5Table','class',studentAnswerAll['消费税附加税费计算表'])
+ *         })
+ */
+export const customTableAssignments = function (str, strArr, tableId, attrType,json) {
+
+    if (str.length > 0 || str !== "") {
+        $('#' + tableId).empty();
+        for (let k = 0; k < json.length; k++) {
+            $('#' + tableId).append(str);
+        }
+    }
+    var tableArr = LT.getElementsFromTable(tableId, attrType);
+    //数组去重
+    tableArr =uniqueFn(tableArr);
+    $('#' + tableId + ' tr').each(function (j, v) {
+        var dataInfo = {};
+        for (var i = 0; i < tableArr.length; i++) {
+            dataInfo[tableArr[i]] = json[j][strArr[i]];
+        }
+       setTableValuesFromJson(dataInfo, v);
+    })
+}
+
 /**
  * @param {Array}strArr 需要赋值顺序数组key
  * @param {string}tableId 表格id
@@ -607,7 +643,7 @@ export const typeColor = function (tableId,infoData,attName){
 export const setAnyTypeValue=function (attName,value){
     var getAtt = $("#" + attName + ", [name='" + attName + "'], [ng-model='" + attName + "'], ." + attName);
     if (getAtt.length==0){
-        console.log('请检查，有误！getAtt的length=>'+getAtt.length);
+        console.log('请检查，有误！获取到的attName的length=>'+getAtt.length);
     }
     try {
         if (getAtt.is('input, textarea, select')) {
@@ -661,7 +697,7 @@ export const getUrlParam = function (paraName) {
         return "";
     }
 }
-//TODO ------------------------------------------------------- 零碎DOM操作-------------------------------------------------------
+//TODO ------------------------------------------------------- 零碎DOM操作-------------------------------------------------------start
 /**
  * 设置元素属性
  * @param {Object}} attrs
@@ -713,8 +749,31 @@ export const fromData = function (obj) {
         return formData;
     }, new FormData());
 }
+/**
+  * @param {String}iframeId iframeId
+  * @param {String}methodName 方法名
+ * @description TODO 根据iframeId调用页面内的方法,可用于嵌套IFrame页面 头部调用 脚页事件等。
+ * @author LTao
+ * @date 2024/3/12 13:05
+ * @example
+ * // 示例用法
+ * $('#btnSave').on('click', function () {
+ *     callIframeMethod("ifr_1", "saveData");
+ * });
+ */
+export const callIframeMethod = function (iframeId, methodName) {
+    // 获取 iframe 的 contentWindow
+    var iframeContentWindow = $("#" + iframeId)[0].contentWindow;
 
-//TODO-------------------------------------------------------对象 字符 数组 数字 null undefined等通用封装-------------------------------------------------------
+    // 检查 contentWindow 是否存在以及是否有指定方法
+    if (iframeContentWindow && typeof iframeContentWindow[methodName] === 'function') {
+        // 调用指定方法
+        iframeContentWindow[methodName]();
+    } else {
+        console.log(methodName + " 方法不存在或不是一个函数");
+    }
+}
+//TODO -------------------------------------------------------对象 字符 数组 数字 null undefined等通用封装-------------------------------------------------------
 /**
  * @description: json数组项属性筛选
  * @param {*} arr
@@ -870,8 +929,20 @@ export const isMatch = function (object, attrs) {
 
     return true;
 }
+/**
+  * @param {Number}Number 数字类型
+  * @param {Object}toValue 任何值
+ * @description TODO 对数字进行校验 自定义返回相应的值
+ * @author LTao
+ * @date 2024/3/12 18:04
+ */
+export const isNaNToValue = function (Number,toValue){
+    return !isNaN(Number)?parseFloat(Number).toFixed(2):toValue;
+}
 
-
+export const isNaNToNullString = function (Number){
+    return !isNaN(Number)?parseFloat(Number).toFixed(2):"";
+}
 /**
  * 转换Key
  * @param {Array} mutilForm 数组对象
@@ -894,6 +965,27 @@ export const isMatch = function (object, attrs) {
  */
 export const filteredArray = function (mutilForm, keyValue, needValue) {
     return mutilForm.filter(item => item[`${keyValue}`] === needValue);
+}
+
+
+/**
+ * @description TODO  通用数组去重方法一：此方法使用对象作为哈希表，通过相同键来实现去重为常量级操作
+ * @param {Array}array 数组
+ * @return
+ * @author Albert_Luo
+ * @date 2024/3/12 21:49
+ */
+// 数组去重
+export const uniqueFn=function (array) {
+    var result = [];
+    var hashObj = {};
+    for (var i = 0; i < array.length; i++) {
+        if (!hashObj[array[i]]) {
+            hashObj[array[i]] = true;
+            result.push(array[i]);
+        }
+    }
+    return result;
 }
 
 /**

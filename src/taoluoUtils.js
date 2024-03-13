@@ -15,7 +15,11 @@ import {
     setValuesByTableId,
     setAnswerValuesByTableId,
     typeColor,
-    setAnyTypeValue
+    setAnyTypeValue,
+    callIframeMethod,
+    isNaNToValue,
+    isNaNToNullString,
+    uniqueFn,customTableAssignments
 } from "./albertLuoTaoUtil";
 /**
  * @description TODO 这是一系列自集成js方法，在对Dom元素 id class name等赋值取值时总要用jquery js 等指定的$ # . getElementID等特殊符号好生繁琐，
@@ -82,7 +86,12 @@ window.LT = {
     objectLength,
     setValuesByTableId,
     setAnswerValuesByTableId,
-    typeColor
+    typeColor,
+    callIframeMethod,
+    isNaNToValue,
+    isNaNToNullString,
+    customTableAssignments,
+    uniqueFn
 };
 //dom option
 window.domOption = {
@@ -90,7 +99,8 @@ window.domOption = {
     trigger,
     getAnyNameValue,
     getSingleValue,
-    hide
+    hide,
+    callIframeMethod
 };
 window.tableOption={
     getValuesFromJson,
@@ -99,7 +109,8 @@ window.tableOption={
     getElementsFromTable,
     getTableValuesFromJson,
     setValuesByTableId,
-    setAnswerValuesByTableId
+    setAnswerValuesByTableId,
+    customTableAssignments
 };
 window.common={
     getType,
@@ -109,7 +120,10 @@ window.common={
     isNumber,isEmail,
     saveStuData,
     isUndefined,
-    setAnyTypeValue
+    setAnyTypeValue,
+    isNaNToValue,
+    isNaNToNullString,
+    uniqueFn
 };
 window.jsonObject={
     isUndefined,
@@ -120,5 +134,6 @@ window.jsonObject={
     fromData
 }
 window.arrayOption={
-    filteredArray
+    filteredArray,
+    uniqueFn,
 }
