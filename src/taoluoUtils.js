@@ -19,7 +19,7 @@ import {
     callIframeMethod,
     isNaNToValue,
     isNaNToNullString,
-    uniqueFn,customTableAssignments
+    uniqueFn,customTableAssignments,setTableValuesAndColor
 } from "./albertLuoTaoUtil";
 /**
  * @description TODO 这是一系列自集成js方法，在对Dom元素 id class name等赋值取值时总要用jquery js 等指定的$ # . getElementID等特殊符号好生繁琐，
@@ -91,7 +91,7 @@ window.LT = {
     isNaNToValue,
     isNaNToNullString,
     customTableAssignments,
-    uniqueFn
+    uniqueFn,setTableValuesAndColor
 };
 //dom option
 window.domOption = {
@@ -110,7 +110,7 @@ window.tableOption={
     getTableValuesFromJson,
     setValuesByTableId,
     setAnswerValuesByTableId,
-    customTableAssignments
+    customTableAssignments,setTableValuesAndColor
 };
 window.common={
     getType,

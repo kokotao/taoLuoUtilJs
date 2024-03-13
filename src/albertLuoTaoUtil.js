@@ -617,7 +617,11 @@ export const setAnswerValuesByTableId = function (strArr,tableId,elemId,objectVa
 }
 
 export const typeColor = function (tableId,infoData,attName){
-    var getAtt = $("#"+tableId).find("#" + attName + ", [name='" + attName + "'], [ng-model='" + attName + "'], ." + attName);
+
+    var getAtt=$(tableId).find("#" + attName + ", [name='" + attName + "'], [ng-model='" + attName + "'], ." + attName);
+    if (getAtt.length===0){
+        getAtt = $("#"+tableId).find("#" + attName + ", [name='" + attName + "'], [ng-model='" + attName + "'], ." + attName);
+    }
     try {
         if (infoData.includes('❀')){
             // getAtt.val(infoData.split('❀')[0]);
