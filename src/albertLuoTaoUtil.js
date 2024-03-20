@@ -1036,6 +1036,52 @@ export const round = function (n, decimals) {
     if (decimals === undefined) return n
     return Number(Math.round(n + 'e' + (decimals || 0)) + 'e-' + (decimals || 0))
 }
+
+function createPopup(emptyKeys) {
+    var popupHTML="";
+    const boldFormDataVerify =emptyKeys.map(item=>'\u2022 ' + item).join('<br>');
+    popupHTML= "以下必填项未填写:<br>" + boldFormDataVerify + "<br>";
+    return popupHTML;
+}
+/**
+ * @description TODO 对指定的keys数组判断json对应的值是否为空 并给出弹窗提示（layui）
+ * @param {JsonObject}       jsonObj  key-value
+ * @param {Array}       keys
+ * @return Boolean
+ * @author Albert_Luo
+ * @date 2024/3/20 23:35
+ * @example
+ * checkAndAlertEmptyValues(taxMes,['房产原值','出租房产原值','出租房产面积','计税比例','纳税义务有效期起'])
+ */
+export const checkAndAlertEmptyValues=function (jsonObj, keys) {
+    var emptyKeys = []; // 用于记录空值的键
+
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        // 检查 JSON 对象是否包含指定的键
+        if (jsonObj.hasOwnProperty(key)) {
+            var value = jsonObj[key];
+
+            // 检查值是否为空
+            if (value === null || value === undefined || value === '') {
+                emptyKeys.push(key); // 将空值的键添加到数组中
+            }
+        } else {
+            // 如果键不存在于 JSON 对象中，则认为值为空
+            emptyKeys.push(key); // 将键添加到数组中
+        }
+    }
+
+    // 弹出提示
+    if (emptyKeys.length > 0) {
+        var popupHTML = createPopup(emptyKeys);
+
+        layer.confirm(popupHTML, {icon: 2});
+        return false;
+    }
+    return true;
+}
+
 //TODO 常用正则表达式
 //是否为邮箱
 export const isEmail = function (value) {
