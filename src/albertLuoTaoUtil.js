@@ -1172,3 +1172,47 @@ export function doCheckRealCard(strRealCard) {
     //alert(tmpBirthday);
     return true;
 }
+
+//todo  下拉框选择组件
+
+// 渲染下拉框
+function renderSelectBox(list) {
+    var selectBoxHTML = '<div class="select-head"><span class="t5CodeOfExemption">请选择</span><span class="select-icon"></span></div><ul class="select-body">';
+    list.forEach(function(item) {
+        selectBoxHTML += '<label><input type="radio" name="food" hidden><li>' + item + '</li></label>';
+    });
+    selectBoxHTML += '</ul>';
+
+    $(".select-box-tao").html(selectBoxHTML);
+}
+
+// 显示/隐藏下拉框
+$(document).on("click", ".select-head", function(event) {
+    var selectBody = $(this).siblings(".select-body");
+    var selectIcon = $(this).find(".select-icon");
+    if (selectBody.is(":visible")) {
+        selectBody.hide();
+        selectIcon.removeClass("icon-Y");
+    } else {
+        selectBody.show();
+        selectIcon.addClass("icon-Y");
+    }
+    event.stopPropagation(); // 阻止事件冒泡
+});
+
+// 选项点击事件
+$(document).on("click", ".select-body li", function() {
+    var selectBody = $(this).closest(".select-body");
+    var selectHead = selectBody.prev();
+    selectBody.hide();
+    selectHead.find(".t5CodeOfExemption").text($(this).text());
+    selectHead.find(".select-icon").removeClass("icon-Y");
+});
+
+// 点击空白区域隐藏下拉框
+$(document).on("click", function(event) {
+    if (!$(event.target).closest('.select-box-tao').length) {
+        $(".select-body").hide();
+        $(".select-icon").removeClass("icon-Y");
+    }
+});

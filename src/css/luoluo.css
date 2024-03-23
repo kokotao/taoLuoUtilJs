@@ -1,0 +1,103 @@
+.hover-windowTip {
+    display: none;
+    position: absolute;
+    top: 180px; /* 将悬浮窗定位到输入框的下方 */
+    right: 0;
+    background-color: #fff;
+    border: 1px solid transparent; /* 使原始边框透明 */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999; /* 确保悬浮窗显示在其他内容上方 */
+}
+
+/* 创建带有圆角的渐变背景 */
+.hover-windowTip::before {
+    content: '';
+    position: absolute;
+    top: -1px; /* 边框宽度 */
+    left: -1px; /* 边框宽度 */
+    width: calc(100% + 2px); /* 覆盖整个悬浮窗 */
+    height: calc(100% + 2px); /* 覆盖整个悬浮窗 */
+    background-image: linear-gradient(to right, #9cddec, #70b1de); /* 渐变背景 */
+    border-radius: 5px; /* 圆角 */
+    z-index: -1; /* 将伪元素放置在悬浮窗的下方 */
+}
+.hover-windowTip img {
+    display: block;
+    width: 100%; /* 图片宽度占满悬浮窗 */
+    height: auto;
+    border-radius: 6px 6px 0 0; /* 图片顶部圆角 */
+}
+
+/* 悬浮窗动画效果 */
+.hover-windowTip {
+    transition: opacity 0.6s ease-in-out;
+}
+.luo-tip:hover .hover-windowTip {
+    display: block;
+}
+
+.select-head{
+    user-select:none;
+    padding: 12px 12px;;
+    width: 150px;
+    border-radius: 3px;
+    border: 1px solid #2260ff;
+    cursor: pointer;
+}
+
+.select-icon{
+    display: block;
+    height: 15px;
+    width: 20px;
+    background: url("./style/images/img/img.png") no-repeat center;
+    background-size: cover;
+    position: absolute;
+    top: 35%;
+    right: 0.5rem;
+}
+
+.icon-Y{
+    transform: scaleY(-1);
+}
+
+.select-body{
+    display: none;
+    margin-top: 8px;
+    background-color: #fff;
+    border: 2px solid #b5bfd9;
+    border-radius: 8px;
+    flex-direction: column;
+    padding: 0.5rem;
+    box-shadow: 0 3px 7px 0 #c8cfe1;
+    width: 500px;
+    height: 300px;
+    position: fixed;
+    overflow-y: auto;
+    right: 18%;
+    top: 20%;
+}
+
+.select-body li{
+    user-select:none;
+    cursor: pointer;
+    color: #4f5d7e;
+    display: block;
+    padding: 0.625rem;
+    border-radius: 8px;
+    margin-top: 0.25rem;
+    width: 100%;
+}
+
+.select-body label{
+    display: flex;
+}
+
+.select-body input:checked + li{
+    background-color: #e9efff;
+    color: #2260ff;
+}
+
+.select-body li:hover{
+    background-color: #e9efff;
+}
