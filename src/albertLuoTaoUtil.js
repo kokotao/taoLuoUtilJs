@@ -425,6 +425,7 @@ export const getElementsFromTable = function (tableId, Element) {
             // 查找表格行下的所有 input 和 select 元素
             let inputElements = td.querySelectorAll('input');
             let selectElements = td.querySelectorAll('select');
+            let pElements = td.querySelectorAll('p');
             // 处理 input 元素
             if (inputElements.length > 0) {
                 inputElements.forEach(input => {
@@ -437,6 +438,15 @@ export const getElementsFromTable = function (tableId, Element) {
             // 处理 select 元素
             if (selectElements.length > 0) {
                 selectElements.forEach(select => {
+                    let elem = $(select).attr(Element);
+                    if (elem) {
+                        elements.push(elem);
+                    }
+                });
+            } 
+            // 处理 select 元素
+            if (pElements.length > 0) {
+                pElements.forEach(select => {
                     let elem = $(select).attr(Element);
                     if (elem) {
                         elements.push(elem);
@@ -1082,6 +1092,16 @@ export const checkAndAlertEmptyValues=function (jsonObj, keys) {
     return true;
 }
 
+const allValuesEmpty =function (obj) {
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (!isValueEmpty(obj[key])) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
 //TODO 常用正则表达式
 //是否为邮箱
 export const isEmail = function (value) {

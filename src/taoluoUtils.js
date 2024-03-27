@@ -92,7 +92,7 @@ window.LT = {
     isNaNToValue,
     isNaNToNullString,
     customTableAssignments,
-    uniqueFn,setTableValuesAndColor,checkAndAlertEmptyValues
+    uniqueFn,setTableValuesAndColor,checkAndAlertEmptyValues,allValuesEmpty
 };
 //dom option
 window.domOption = {
@@ -124,7 +124,7 @@ window.common={
     setAnyTypeValue,
     isNaNToValue,
     isNaNToNullString,
-    uniqueFn,checkAndAlertEmptyValues
+    uniqueFn,checkAndAlertEmptyValues,allValuesEmpty
 };
 window.jsonObject={
     isUndefined,
@@ -132,7 +132,7 @@ window.jsonObject={
     convertKey,
     objectLength,
     isMatch,
-    fromData,checkAndAlertEmptyValues
+    fromData,checkAndAlertEmptyValues,allValuesEmpty
 }
 window.arrayOption={
     filteredArray,
