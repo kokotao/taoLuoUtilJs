@@ -1091,8 +1091,24 @@ export const checkAndAlertEmptyValues=function (jsonObj, keys) {
     }
     return true;
 }
-
-const allValuesEmpty =function (obj) {
+function isValueEmpty(value) {
+    if (Array.isArray(value)) {
+        return value.every(isValueEmpty);
+    } else if (typeof value === 'object' && value !== null) {
+        return isObjectEmpty(value);
+    } else {
+        return value === null || value === undefined || value === '';
+    }
+}
+function isObjectEmpty(obj) {
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+//这个函数的作用是遍历给定的对象，检查其中所有键对应的值是否都为空。如果所有值都为空，则返回 true，否则返回 false。
+export const allValuesEmpty =function (obj) {
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
             if (!isValueEmpty(obj[key])) {
